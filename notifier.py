@@ -1,20 +1,21 @@
 import requests
 from datetime import datetime
-from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS
 
 
 def send_telegram(message: str) -> None:
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-        "parse_mode": "Markdown",
-    }
-    try:
-        resp = requests.post(url, json=payload, timeout=10)
-        resp.raise_for_status()
-    except Exception as exc:
-        print(f"[telegram] Failed to send message: {exc}")
+    for chat_id in TELEGRAM_CHAT_IDS:
+        payload = {
+            "chat_id": chat_id.strip(),
+            "text": message,
+            "parse_mode": "Markdown",
+        }
+        try:
+            resp = requests.post(url, json=payload, timeout=10)
+            resp.raise_for_status()
+        except Exception as exc:
+            print(f"[telegram] Failed to send to {chat_id}: {exc}")
 
 
 def price_summary(states: dict) -> str:

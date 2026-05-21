@@ -16,6 +16,6 @@ CANDLES_TO_FETCH = 300     # fetch extra so EMA has time to warm up
 POLL_INTERVAL_SECONDS = 60       # check every 1 minute
 
 TELEGRAM_BOT_TOKEN: str = os.environ["TELEGRAM_BOT_TOKEN"]
-TELEGRAM_CHAT_ID: str = os.environ["TELEGRAM_CHAT_ID"]
+TELEGRAM_CHAT_IDS: list[str] = os.environ["TELEGRAM_CHAT_ID"].split(",")
 
 BLOFIN_BASE_URL = "https://openapi.blofin.com"
